@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+const savory = [
+  ['Natural','🌽','4|8|30|95','CLÁSICA'], ['Mantequilla','🧈','5|9|35|105','CLÁSICA'], ['Queso','🧀','7|13|45|115','CLÁSICA'],
+  ['Chile','🌶️','7|13|45|115','PICANTE'], ['Ajo & cebolla','🧄','7|13|45|115','ESPECIAL'], ['Especias','✨','7|13|45|115','ESPECIAL'],
+  ['Jalapeño','🌶️','7|13|45|115','PICANTE'], ['Esquites','🌽','7|13|45|115','DE LA CASA'], ['Flaming Hot','🔥','7|13|45|115','PICANTE'],
+  ['Takis','🌀','7|13|45|115','PICANTE'], ['Limón & pimienta','🍋','7|13|45|115','ESPECIAL'], ['BBQ','🍖','7|13|45|115','ESPECIAL'],
+  ['Ranch','🌿','7|13|45|115','ESPECIAL'], ['Habanero','🌶️','7|13|45|115','PICANTE'], ['Parmesano','🧀','7|13|45|115','ESPECIAL']
+];
+const sweet = [
+  ['Caramelo','🍯','8|15|55|120','CLÁSICA'], ['Canela','🤎','9|18|65|200','CLÁSICA'], ['Manzana verde','🍏','9|18|65|200','FRUTAL'],
+  ['Cereza','🍒','9|18|65|200','FRUTAL'], ['Uva','🍇','9|18|65|200','FRUTAL'], ['Mora azul','🫐','9|18|65|200','FRUTAL'],
+  ['Plátano','🍌','9|18|65|200','FRUTAL'], ['Choco plátano','🍫','9|18|65|200','ESPECIAL'], ['Chocolate','🍫','9|18|65|200','ESPECIAL'],
+  ['Fresa','🍓','9|18|65|200','FRUTAL'], ['Piña con chile','🍍','9|18|65|200','ESPECIAL'], ['Pica fresa','🍬','9|18|65|200','ESPECIAL'],
+  ['Coco tostado','🥥','9|18|65|200','ESPECIAL'], ['Vainilla','🍦','9|18|65|200','ESPECIAL'], ['Algodón de azúcar','🍭','9|18|65|200','ESPECIAL']
+];
+const all = [...savory.map((x,i)=>({name:x[0],emoji:x[1],prices:x[2].split('|'),tag:x[3],type:'SALADAS',id:`s${i}`})), ...sweet.map((x,i)=>({name:x[0],emoji:x[1],prices:x[2].split('|'),tag:x[3],type:'DULCES',id:`d${i}`}))];
+const sizes = ['CH','MD','G','XL'];
+---
+<Layout>
+  <div class="app-shell">
+    <aside class="side-rail" aria-label="Navegación"><div class="rail-logo">PX<span>★</span></div><a class="rail-link active" href="#menu" aria-label="Menú">▦</a><a class="rail-link" href="#paquetes" aria-label="Paquetes">▤</a><div class="rail-bottom">EST.<br/>20XX</div></aside>
+    <div class="main-wrap">
+      <header class="topbar"><a class="wordmark" href="#top">PALOMITAS<span>X</span></a><div class="top-center"><i></i> ARCADE SNACK SYSTEM <small>/// ONLINE</small></div><button class="cart-top" id="cart-jump"><span class="cart-icon">▣</span> CARRITO <b id="cart-count">0</b></button></header>
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> POP! POP! POP! — HECHO PARA COMPARTIR</div><h1>ELIGE TU<br/><em>ANTOJO.</em></h1><p>Palomitas para fiestas, eventos y todos tus días. Arma tu combo y cotiza en un toque.</p><div class="hero-ctas"><a href="#menu" class="button primary">VER MENÚ <span>↘</span></a><a href="#paquetes" class="text-cta">EXPLORAR PAQUETES <span>↗</span></a></div><div class="hero-stats"><div><b>30</b><small>SABORES</small></div><div><b>02</b><small>UNIVERSOS</small></div><div><b>∞</b><small>BUEN PLAN</small></div></div></div>
+          <div class="hero-art" aria-label="Ilustración de una caja de palomitas"><div class="art-sticker">FRESH<br/>DROP<br/><b>★ 01</b></div><div class="burst burst-a">✳</div><div class="burst burst-b">✦</div><div class="popcorn-box"><div class="pops">🍿</div><div class="box-label">POP!<small>PALOMITASX</small></div></div><div class="art-caption">SNACKS<br/><b>WITH ATTITUDE</b></div><div class="art-line"></div></div>
+          <div class="hero-foot"><span>01 / 03</span><div class="slider-dots"><i></i><i></i><i></i></div><span>DESLIZA PARA DESCUBRIR ↓</span></div>
+        </section>
+        <div class="content-grid">
+          <section class="catalog" id="menu">
+            <div class="section-head"><div><div class="eyebrow red">[ SELECT YOUR FLAVOR ]</div><h2>MENÚ <span>POP!</span></h2></div><div class="size-legend"><small>TAMAÑO</small><span>CH</span><span>MD</span><span>G</span><span>XL</span></div></div>
+            <div class="filter-row"><button class="filter active" data-filter="ALL">◈ TODO <small>30</small></button><button class="filter" data-filter="SALADAS">◉ SALADAS <small>15</small></button><button class="filter" data-filter="DULCES">✿ DULCES <small>15</small></button><div class="sort-label">ORDEN: <b>FAVORITOS ↓</b></div></div>
+            <div class="flavor-grid" id="flavor-grid">
+              {all.map((item, index) => <article class="flavor-card" data-kind={item.type} data-name={item.name.toLowerCase()}>
+                <div class={`card-art art-${index % 6}`}><span class="card-code">PX-{String(index+1).padStart(2,'0')}</span><span class="card-emoji">{item.emoji}</span><span class="card-spark">✳</span><button class="quick-add" aria-label={`Agregar ${item.name}`} data-add={item.id}>+</button></div>
+                <div class="card-info"><div><small>{item.tag}</small><h3>{item.name}</h3></div><span class="kind-tag">{item.type === 'SALADAS' ? 'S' : 'D'}</span></div>
+                <div class="card-bottom"><div class="price-line"><span>DESDE</span><b>${item.prices[0]}</b></div><label class="size-select"><span class="sr-only">Tamaño</span><select data-size={item.id}>{sizes.map((s,i)=><option value={i}>{s}</option>)}</select><span>▾</span></label></div>
+                <span class="peso-note">MXN · precio por tamaño</span>
+              </article>)}
+            </div>
+            <section class="packages" id="paquetes"><div class="packages-title"><div><div class="eyebrow">[ PARTY MODE ]</div><h2>PAQUETES <span>PARA COMPARTIR</span></h2></div><span class="pack-count">02 COMBOS DISPONIBLES</span></div><div class="package-grid">
+              <article class="package-card"><div class="package-visual pack-yellow">🍿<span>× 6</span></div><div class="package-data"><span class="package-kicker">01 / MINI PARTY</span><h3>Combo Reunión</h3><p>6 bolsas medianas · sabores a elegir</p><b>$180 <small>MXN</small></b></div><button class="add-package" data-pack="Combo Reunión" data-cost="180">AGREGAR +</button></article>
+              <article class="package-card featured"><div class="package-visual pack-red">🍿<span>× 12</span></div><div class="package-data"><span class="package-kicker">02 / FULL PARTY</span><h3>Combo Fiesta</h3><p>12 bolsas medianas · sabores a elegir</p><b>$340 <small>MXN</small></b></div><button class="add-package" data-pack="Combo Fiesta" data-cost="340">AGREGAR +</button></article>
+            </div><p class="package-note">Combos de muestra editables · pregunta por opciones para eventos y distribución.</p></section>
+            <footer><span>PALOMITASX © 2026</span><span>MAÍZ + ACTITUD <b>✳</b></span><span>HECHO PARA HACER POP!</span></footer>
+          </section>
+          <aside class="cart-panel" id="cart-panel"><div class="cart-heading"><div><div class="eyebrow">[ YOUR LOADOUT ]</div><h2>MI CARRITO <span>↗</span></h2></div><span class="cart-counter" id="cart-count-side">00</span></div><div class="cart-items" id="cart-items"><div class="empty-cart"><div class="empty-icon">▱</div><b>Tu carrito está vacío</b><small>Elige un sabor para empezar tu misión.</small></div></div><div class="insumo-callout"><span>✳</span><div><b>¿NECESITAS INSUMOS?</b><small>Maíz, aceite, saborizantes y más.</small></div><button id="insumos-wa" aria-label="Cotizar insumos por WhatsApp">↗</button></div><div class="cart-total"><span>TOTAL ESTIMADO</span><b id="cart-total">$0 <small>MXN</small></b></div><button class="whatsapp-button" id="checkout"><span>◉</span> COTIZAR POR WHATSAPP <b>↗</b></button><div class="cart-note">PRECIOS DE REFERENCIA · CONFIRMA DISPONIBILIDAD</div><div class="cart-mini"><span>⌁</span> PEDIDOS PARA EVENTOS Y DISTRIBUCIÓN</div></aside>
+        </div>
+      </main>
+    </div>
+    <a class="wa-float" id="float-wa" href="#" aria-label="Cotizar por WhatsApp"><span>◉</span><b>¿COTIZAMOS?</b><i>↗</i></a>
+    <div class="toast" id="toast">AGREGADO AL CARRITO ✳</div>
+  </div>
+  <script type="application/json" id="product-data" set:html={JSON.stringify(all.map(x=>({id:x.id,name:x.name,type:x.type,prices:x.prices.map(Number)})))}></script>
+  <script is:inline>
+    const cart = new Map();
+    const waNumber = '525540402846'; // Cambia este número por el WhatsApp del negocio.
+    const products = JSON.parse(document.getElementById('product-data').textContent);
+    const money=n=>'$'+Number(n).toLocaleString('es-MX');
+    function renderCart(){const host=document.getElementById('cart-items'); let entries=[...cart.values()]; document.getElementById('cart-count').textContent=entries.reduce((s,x)=>s+x.qty,0); document.getElementById('cart-count-side').textContent=String(entries.reduce((s,x)=>s+x.qty,0)).padStart(2,'0'); if(!entries.length){host.innerHTML='<div class="empty-cart"><div class="empty-icon">▱</div><b>Tu carrito está vacío</b><small>Elige un sabor para empezar tu misión.</small></div>';}else{host.innerHTML=entries.map((x,i)=>`<div class="cart-item"><span class="item-emoji">${x.emoji||'🍿'}</span><div class="item-copy"><b>${x.name}</b><small>${x.detail}</small><div class="qty-controls"><button data-qty="${i}" data-delta="-1">−</button><span>${x.qty}</span><button data-qty="${i}" data-delta="1">+</button></div></div><strong>${money(x.price*x.qty)}</strong></div>`).join('');}document.getElementById('cart-total').innerHTML=money(entries.reduce((s,x)=>s+x.price*x.qty,0))+' <small>MXN</small>';}
+    let toastTimer; function toast(){const el=document.getElementById('toast');el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),1500)}
+    document.querySelectorAll('.flavor-card').forEach(card=>{const id=card.querySelector('[data-add]').dataset.add;const p=products.find(x=>x.id===id);card.querySelector('.size-select select').dataset.prices=p.prices.join('|');card.querySelector('.size-select select').addEventListener('change',e=>{card.querySelector('.price-line b').textContent=money(p.prices[e.target.value]);});card.querySelector('[data-add]').addEventListener('click',()=>{const size=card.querySelector('select').value;const key=id+'-'+size;const existing=cart.get(key);cart.set(key,{key,name:p.name,detail:['CH','MD','G','XL'][size]+' · '+p.type,price:p.prices[size],qty:(existing?.qty||0)+1,emoji:card.querySelector('.card-emoji').textContent});renderCart();toast();});});
+    document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.flavor-card').forEach(card=>card.classList.toggle('hidden',btn.dataset.filter!=='ALL'&&card.dataset.kind!==btn.dataset.filter));}));
+    document.querySelectorAll('.add-package').forEach(btn=>btn.addEventListener('click',()=>{const key='pack-'+btn.dataset.pack;const old=cart.get(key);cart.set(key,{key,name:btn.dataset.pack,detail:'Paquete · sabores a elegir',price:Number(btn.dataset.cost),qty:(old?.qty||0)+1,emoji:'🍿'});renderCart();toast();}));
+    document.getElementById('cart-items').addEventListener('click',e=>{const b=e.target.closest('[data-qty]');if(!b)return;const entries=[...cart.values()],item=entries[Number(b.dataset.qty)];item.qty+=Number(b.dataset.delta);if(item.qty<=0)cart.delete(item.key);renderCart();});
+    function sendWhatsApp(insumos=false){const entries=[...cart.values()];let message=insumos?'Hola, quiero cotizar insumos para palomitas (maíz, aceite, saborizantes y bolsas).':entries.length?'Hola, quiero cotizar este pedido de PALOMITASX:\n'+entries.map(x=>`• ${x.qty} × ${x.name} (${x.detail}) — ${money(x.price*x.qty)}`).join('\n')+`\n\nTotal estimado: ${money(entries.reduce((s,x)=>s+x.price*x.qty,0))} MXN\n¿Me ayudan a confirmar disponibilidad y precio final?`:'Hola, quiero cotizar palomitas para un evento. ¿Me comparten opciones de sabores y paquetes?';window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`,'_blank','noopener');}
+    document.getElementById('checkout').addEventListener('click',()=>sendWhatsApp());document.getElementById('insumos-wa').addEventListener('click',()=>sendWhatsApp(true));document.getElementById('float-wa').addEventListener('click',e=>{e.preventDefault();sendWhatsApp()});document.getElementById('cart-jump').addEventListener('click',()=>document.getElementById('cart-panel').scrollIntoView({behavior:'smooth',block:'center'}));renderCart();
+  </script>
+
+</Layout>
+
