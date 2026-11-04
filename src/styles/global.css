@@ -746,3 +746,91 @@ footer b { color: var(--red); }
 @media (max-width: 900px) { .pi { grid-column: 1; grid-row: 1; max-width: 560px; } .hero-copy { grid-column: 1; grid-row: 2; } }
 @media (max-width: 620px) { .pi { padding: 10px; } .pi-head h2 { font-size: 1.45rem; } .pi-head p { font-size: 13px; } .pi-cv { max-width: 300px; } .pi-bar { font-size: 10px; } }
 @media (prefers-reduced-motion: reduce) { .pi-btn, .pi-ico { transition: none; } }
+
+
+/* Cuestionario de eventos en ventana modal de pantalla completa */
+.cart-mini { width: 100%; cursor: pointer; font: 700 9px/1.35 'Space Mono'; }
+.cart-mini:hover { filter: saturate(1.12) brightness(1.02); transform: translateY(-2px); }
+.cart-mini:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.event-dialog {
+  position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  margin: 0; padding: clamp(16px, 4vw, 40px); border: 0; background: #211916ed;
+  color: var(--ink); overflow: auto;
+}
+.event-dialog[open] { display: grid; place-items: center; }
+.event-dialog::backdrop { background: #140e0bd9; backdrop-filter: blur(5px); }
+.event-dialog-card {
+  position: relative; width: min(100%, 690px); margin: auto; padding: clamp(22px, 4vw, 38px);
+  border: 3px solid var(--ink); border-radius: 20px; background: var(--paper);
+  box-shadow: 8px 8px 0 var(--red); animation: eventCardIn .22s ease-out both;
+}
+.event-dialog-close {
+  position: absolute; top: 12px; right: 12px; width: 42px; height: 42px; display: grid; place-items: center;
+  border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); color: var(--ink);
+  font: 30px/1 'DM Sans'; cursor: pointer; transition: transform .16s ease;
+}
+.event-dialog-close:hover { transform: rotate(90deg); }
+.event-kicker { display: inline-block; padding: 7px 10px; border-radius: 99px; background: var(--green); color: var(--ink); font: 700 10px 'Space Mono'; }
+.event-dialog-card h2 { max-width: 85%; margin: 14px 0 6px; font: 38px/1 'Lilita One'; }
+.event-dialog-card > p { margin: 0 0 22px; color: #685c50; }
+.event-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.event-form label { display: grid; align-content: start; gap: 7px; font-size: 13px; font-weight: 800; }
+.event-form input, .event-form select {
+  width: 100%; min-height: 48px; padding: 10px 12px; border: 2px solid #c9bda9; border-radius: 9px;
+  background: #fffdf8; color: var(--ink); font: 600 14px 'DM Sans';
+}
+.event-form input:focus, .event-form select:focus { outline: 3px solid #ed493833; border-color: var(--red); }
+.event-submit {
+  grid-column: 1 / -1; min-height: 52px; margin-top: 4px; padding: 11px 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
+  border: 2px solid #155d35; border-radius: 10px; background: #25d366; color: #103b26;
+  box-shadow: 3px 3px 0 #155d35; font: 700 12px 'Space Mono'; cursor: pointer; transition: transform .16s, box-shadow .16s;
+}
+.event-submit:hover { transform: translateY(-2px); box-shadow: 3px 5px 0 #155d35; }
+.event-submit .whatsapp-mark { fill: #168a4a; }
+.event-footnote { display: block; margin-top: 14px; color: #685c50; text-align: center; font-size: 11px; }
+@keyframes eventCardIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 620px) {
+  .event-dialog { padding: 10px; }
+  .event-dialog-card { padding: 22px 16px; border-radius: 15px; box-shadow: 4px 4px 0 var(--red); }
+  .event-dialog-card h2 { font-size: 31px; }
+  .event-form { grid-template-columns: 1fr; gap: 12px; }
+  .event-submit { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .event-dialog-card { animation: none; } .event-submit, .event-dialog-close { transition: none; } }
+
+
+/* Aviso de bienvenida estilo póster retro */
+.welcome-dialog {
+  position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  margin: 0; padding: 18px; place-items: center; overflow: hidden; border: 0;
+  background: radial-gradient(circle at 50% 45%, #593017 0, #211916 52%, #110f0d 100%); color: var(--ink);
+}
+.welcome-dialog[open] { display: grid; }
+.welcome-dialog::backdrop { background: #140d0bed; backdrop-filter: blur(8px); }
+.welcome-card {
+  position: relative; width: min(100%, 560px); padding: clamp(27px, 5vw, 48px) clamp(22px, 6vw, 56px) 30px;
+  overflow: hidden; border: 4px solid var(--ink); border-radius: 24px;
+  background: var(--paper); text-align: center; box-shadow: 10px 10px 0 var(--red), 0 0 0 8px #ffd34f;
+  animation: welcomeEnter .55s cubic-bezier(.2,.9,.25,1.25) both;
+}
+.welcome-card::before { content: ''; position: absolute; inset: 0 0 auto; height: 13px; background: repeating-linear-gradient(135deg,var(--red) 0 13px,var(--yellow) 13px 26px); }
+.welcome-close { position: absolute; top: 20px; right: 18px; width: 40px; height: 40px; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); color: var(--ink); font: 28px/1 'DM Sans'; cursor: pointer; transition: transform .2s; }
+.welcome-close:hover { transform: rotate(90deg) scale(1.08); }
+.welcome-stamp { display: inline-block; margin-top: 4px; padding: 7px 10px; transform: rotate(-2deg); background: var(--ink); color: var(--yellow); font: 700 9px 'Space Mono'; letter-spacing: .8px; }
+.welcome-popcorn { width: 100px; height: 100px; margin: 21px auto 12px; display: grid; place-items: center; border: 3px solid var(--ink); border-radius: 50%; background: var(--yellow); box-shadow: 4px 4px 0 var(--red); font-size: 56px; animation: welcomePop 2s ease-in-out infinite; }
+.welcome-eyebrow { color: var(--red); font: 700 10px 'Space Mono'; letter-spacing: 1.2px; }
+.welcome-card h2 { margin: 10px 0 8px; color: var(--ink); font: clamp(42px, 8vw, 68px)/.9 'Lilita One'; letter-spacing: -.5px; text-transform: uppercase; }
+.welcome-card h2 em { color: var(--red); font-style: normal; text-shadow: 2px 2px 0 var(--yellow); }
+.welcome-card p { margin: 15px 0 20px; color: #5c4a3d; font-size: 16px; font-weight: 700; }
+.welcome-continue { width: 100%; min-height: 54px; padding: 12px 15px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 2px solid var(--ink); border-radius: 11px; background: var(--red); color: #fff; box-shadow: 4px 4px 0 var(--ink); font: 700 11px 'Space Mono'; cursor: pointer; transition: transform .16s, box-shadow .16s; }
+.welcome-continue:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+.welcome-continue span { color: var(--yellow); font-size: 20px; }
+.welcome-card > small { display: block; margin-top: 17px; color: #756455; font: 700 8px 'Space Mono'; letter-spacing: .8px; }
+.welcome-burst { position: absolute; color: var(--yellow); text-shadow: 0 0 18px #ffd34f99; animation: welcomeTwinkle 2.2s ease-in-out infinite alternate; }
+.burst-one { top: 17%; left: 12%; font-size: clamp(32px, 7vw, 72px); }
+.burst-two { right: 11%; bottom: 17%; color: var(--red); font-size: clamp(28px, 6vw, 60px); animation-delay: .6s; }
+@keyframes welcomeEnter { from { opacity: 0; transform: translateY(28px) scale(.88) rotate(-2deg); } to { opacity: 1; transform: translateY(0) scale(1) rotate(0); } }
+@keyframes welcomePop { 0%,100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(5deg) scale(1.08); } }
+@keyframes welcomeTwinkle { from { opacity: .45; transform: scale(.8) rotate(-12deg); } to { opacity: 1; transform: scale(1.12) rotate(12deg); } }
+@media (max-width: 520px) { .welcome-card { padding: 28px 20px 24px; box-shadow: 5px 5px 0 var(--red), 0 0 0 4px #ffd34f; } .welcome-popcorn { width: 82px; height: 82px; font-size: 46px; margin-top: 18px; } .welcome-card p { font-size: 14px; } .welcome-stamp { font-size: 8px; } .welcome-close { top: 19px; right: 12px; } }
+@media (prefers-reduced-motion: reduce) { .welcome-card, .welcome-popcorn, .welcome-burst { animation: none; } .welcome-close, .welcome-continue { transition: none; } }
