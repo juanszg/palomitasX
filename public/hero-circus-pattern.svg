@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" preserveAspectRatio="none">
+  <defs>
+    <pattern id="tent-stripes" width="280" height="520" patternUnits="userSpaceOnUse" patternTransform="skewX(-14)">
+      <path d="M0 0h70v520H0z" fill="#ed4938" fill-opacity=".2"/>
+      <path d="M70 0h70v520h-70z" fill="#ffd34f" fill-opacity=".12"/>
+      <path d="M210 0h70v520h-70z" fill="#fff6e5" fill-opacity=".08"/>
+    </pattern>
+    <linearGradient id="shade" x1="0" x2="1">
+      <stop stop-color="#211916" stop-opacity=".75"/>
+      <stop offset=".55" stop-color="#211916" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#211916" stop-opacity=".55"/>
+    </linearGradient>
+    <g id="star" fill="#ffd34f" fill-opacity=".55">
+      <path d="M0-18 5-5 18 0 5 5 0 18-5 5-18 0-5-5z"/>
+    </g>
+  </defs>
+  <rect width="1200" height="520" fill="url(#tent-stripes)"/>
+  <rect width="1200" height="520" fill="url(#shade)"/>
+  <g fill="#ffd34f" fill-opacity=".52">
+    <circle cx="52" cy="35" r="5"/><circle cx="112" cy="35" r="5"/><circle cx="172" cy="35" r="5"/><circle cx="232" cy="35" r="5"/><circle cx="292" cy="35" r="5"/>
+    <circle cx="908" cy="485" r="5"/><circle cx="968" cy="485" r="5"/><circle cx="1028" cy="485" r="5"/><circle cx="1088" cy="485" r="5"/><circle cx="1148" cy="485" r="5"/>
+  </g>
+  <use href="#star" x="1030" y="82"/><use href="#star" x="1120" y="395" transform="scale(.7)"/><use href="#star" x="95" y="430" transform="scale(.65)"/>
+  <path d="M0 65h1200M0 455h1200" stroke="#fff6e5" stroke-opacity=".1" stroke-width="2" stroke-dasharray="8 14"/>
+</svg>

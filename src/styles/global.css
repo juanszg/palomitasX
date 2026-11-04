@@ -102,10 +102,6 @@ h1 em { color: var(--yellow); font-style: normal; }
 }
 .text-cta { color: #f1eadd; font: 10px 'Space Mono'; text-decoration: underline; text-underline-offset: 3px; }
 .text-cta span { margin-left: 4px; color: var(--yellow); }
-.hero-stats { margin-top: 24px; display: flex; gap: 10px; }
-.hero-stats div { min-width: 102px; padding: 7px 10px; display: flex; align-items: center; gap: 8px; border: 1px solid #ffffff44; border-radius: 9px; background: #ffffff0c; }
-.hero-stats b { color: var(--yellow); font: 27px 'Lilita One'; }
-.hero-stats small { color: #e7dfd3; font: 8px 'Space Mono'; }
 .hero-art { height: 270px; position: relative; display: grid; place-items: center; }
 .popcorn-box {
   width: 185px; height: 175px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -259,10 +255,6 @@ footer b { color: var(--red); }
   h1 { font-size: clamp(56px, 15vw, 78px); }
   .hero-copy > p { font-size: 14px; }
   .hero-ctas { flex-wrap: wrap; gap: 12px; }
-  .hero-stats { gap: 6px; }
-  .hero-stats div { min-width: 0; padding: 6px 8px; gap: 5px; }
-  .hero-stats b { font-size: 22px; }
-  .hero-stats small { font-size: 7px; }
   .content-grid { margin: 0 14px; gap: 24px; }
   .section-head { align-items: flex-start; flex-wrap: wrap; }
   h2 { font-size: 33px; }
@@ -295,7 +287,6 @@ footer b { color: var(--red); }
 }
 @media (max-width: 360px) {
   .hero { padding-right: 15px; padding-left: 15px; }
-  .hero-stats small { font-size: 6px; }
   .card-bottom { flex-wrap: wrap; }
   .size-legend { font-size: 8px; }
   .package-card { grid-template-columns: 58px minmax(0, 1fr); }
@@ -677,7 +668,6 @@ footer b { color: var(--red); }
   .hero h1 { margin: 14px 0 10px; font-size: clamp(48px, 13vw, 64px); }
   .hero-copy > p { font-size: 12px; }
   .hero-ctas { margin-top: 13px; }
-  .hero-stats { display: none; }
 }
 .invader { display: grid; place-items: center; visibility: visible; color: white; }
 .pop-target { display: block; width: 34px; height: 40px; overflow: visible; filter: drop-shadow(0 2px 2px #0008); }
@@ -834,3 +824,45 @@ footer b { color: var(--red); }
 @keyframes welcomeTwinkle { from { opacity: .45; transform: scale(.8) rotate(-12deg); } to { opacity: 1; transform: scale(1.12) rotate(12deg); } }
 @media (max-width: 520px) { .welcome-card { padding: 28px 20px 24px; box-shadow: 5px 5px 0 var(--red), 0 0 0 4px #ffd34f; } .welcome-popcorn { width: 82px; height: 82px; font-size: 46px; margin-top: 18px; } .welcome-card p { font-size: 14px; } .welcome-stamp { font-size: 8px; } .welcome-close { top: 19px; right: 12px; } }
 @media (prefers-reduced-motion: reduce) { .welcome-card, .welcome-popcorn, .welcome-burst { animation: none; } .welcome-close, .welcome-continue { transition: none; } }
+
+
+/* Hero con ambiente de carpa de circo */
+.hero::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url('/hero-circus-pattern.svg') center / cover no-repeat;
+  opacity: .2; mix-blend-mode: screen;
+}
+.hero-copy, .pi { z-index: 1; }
+.hero-foot { z-index: 2; }
+
+/* Preguntas frecuentes */
+.faq-section {
+  margin: 42px clamp(20px, 4vw, 58px) 50px; padding: clamp(22px, 4vw, 42px);
+  border: 2px solid var(--ink); border-radius: 20px; background: #fffdf8;
+  box-shadow: 6px 6px 0 var(--red);
+}
+.faq-heading { max-width: 720px; margin: 0 auto 24px; text-align: center; }
+.faq-heading h2 { margin: 8px 0; font: 52px/.95 'Lilita One'; }
+.faq-heading h2 span { color: var(--red); }
+.faq-heading p { margin: 0; color: #685c50; font-size: 14px; }
+.faq-list { max-width: 850px; margin: 0 auto; display: grid; gap: 10px; }
+.faq-item { overflow: hidden; border: 1.5px solid #d8cdbb; border-radius: 11px; background: #fff8ec; transition: border-color .18s, box-shadow .18s, transform .18s; }
+.faq-item[open] { border-color: var(--red); box-shadow: 3px 3px 0 #ed493833; }
+.faq-item summary { min-height: 56px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; color: var(--ink); cursor: pointer; list-style: none; font-weight: 800; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary span { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border-radius: 50%; background: var(--yellow); color: var(--ink); font: 700 19px 'DM Sans'; transition: transform .2s, background .2s; }
+.faq-item[open] summary span { transform: rotate(45deg); background: var(--red); color: white; }
+.faq-item p { margin: 0; padding: 0 58px 17px 16px; color: #65594d; font-size: 14px; line-height: 1.6; animation: faqReveal .2s ease both; }
+.faq-contact { width: fit-content; max-width: 100%; margin: 22px auto 0; padding: 12px 16px; display: flex; justify-content: center; border: 2px solid #155d35; border-radius: 9px; background: #25d366; color: #103b26; text-align: center; text-decoration: none; font: 700 11px 'Space Mono'; box-shadow: 3px 3px 0 #155d35; transition: transform .16s, box-shadow .16s; }
+.faq-contact:hover { transform: translateY(-2px); box-shadow: 3px 5px 0 #155d35; }
+@keyframes faqReveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 620px) {
+  .faq-section { margin: 30px 14px 36px; padding: 21px 14px; border-radius: 15px; }
+  .faq-heading h2 { font-size: 42px; }
+  .faq-heading p { font-size: 12px; }
+  .faq-item summary { min-height: 52px; padding: 12px; font-size: 13px; }
+  .faq-item p { padding: 0 14px 14px; font-size: 13px; }
+  .faq-contact { width: 100%; font-size: 10px; }
+  .hero::after { background-position: 58% center; opacity: .15; }
+}
+@media (prefers-reduced-motion: reduce) { .faq-item, .faq-item summary span, .faq-contact { transition: none; } .faq-item p { animation: none; } }
