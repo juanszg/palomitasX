@@ -1,20 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 const savory = [
-  ['Natural','🌽','8|16|60|190','CLÁSICA'], ['Mantequilla','🧈','10|18|70|210','CLÁSICA'], ['Queso','🧀','14|26|90|230','CLÁSICA'],
-  ['Chile','🌶️','14|26|90|230','PICANTE'], ['Ajo & cebolla','🧄','14|26|90|230','ESPECIAL'], ['Especias','✨','14|26|90|230','ESPECIAL'],
-  ['Jalapeño','🌶️','14|26|90|230','PICANTE'], ['Esquites','🌽','14|26|90|230','DE LA CASA'], ['Flaming Hot','🔥','14|26|90|230','PICANTE'],
-  ['Takis','🌀','14|26|90|230','PICANTE'], ['Limón & pimienta','🍋','7|13|45|115','ESPECIAL'],
-  ['Habanero','🌶️','7|13|45|115','PICANTE']
+  ['Natural','🌽','10|20|60|190','CLÁSICA'], ['Mantequilla','🧈','10|20|70|210','CLÁSICA'], ['Queso','🧀','15|30|90|230','CLÁSICA'],
+  ['Chile','🌶️','15|30|90|230','PICANTE'], ['Ajo & cebolla','🧄','15|30|90|230','ESPECIAL'], ['Especias','✨','15|30|90|230','ESPECIAL'],
+  ['Jalapeño','🌶️','15|30|90|230','PICANTE'], ['Esquites','🌽','15|30|90|230','DE LA CASA'], ['Flaming Hot','🔥','20|30|90|230','PICANTE'],
+  ['Takis','🌀','20|26|90|230','PICANTE']
 ];
 const sweet = [
-  ['Caramelo','🍯','16|30|110|240','CLÁSICA'], ['Canela','🤎','18|36|130|400','CLÁSICA'], ['Manzana verde','🍏','18|36|130|400','FRUTAL'],
+  ['Caramelo','🍯','18|30|110|240','CLÁSICA'], ['Canela','🤎','20|40|130|400','CLÁSICA'], ['Manzana verde','🍏','18|36|130|400','FRUTAL'],
   ['Cereza','🍒','18|36|130|400','FRUTAL'], ['Uva','🍇','18|36|130|400','FRUTAL'], ['Mora azul','🫐','18|36|130|400','FRUTAL'],
   ['Plátano','🍌','18|36|130|400','FRUTAL'], ['Choco plátano','🍫','18|36|130|400','ESPECIAL'], ['Chocolate','🍫','18|36|130|400','ESPECIAL'],
   ['Fresa','🍓','18|36|130|400','FRUTAL'], ['Piña con chile','🍍','18|36|130|400','ESPECIAL'], ['Pica fresa','🍬','18|36|130|400','ESPECIAL'],
 ];
 const all = [...savory.map((x,i)=>({name:x[0],emoji:x[1],prices:x[2].split('|'),tag:x[3],type:'SALADAS',id:`s${i}`})), ...sweet.map((x,i)=>({name:x[0],emoji:x[1],prices:x[2].split('|'),tag:x[3],type:'DULCES',id:`d${i}`}))];
 const sizes = ['CH','MD','G','XL'];
+const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],['1.25 kg','2 kg']];
 ---
 <Layout>
   <div class="app-shell">
@@ -27,7 +27,7 @@ const sizes = ['CH','MD','G','XL'];
       </nav>
     </aside>
     <div class="main-wrap">
-      <header class="topbar"><span class="topbar-spacer" aria-hidden="true"></span><a class="wordmark" href="#top">PALOMITAS<span>X</span></a><button class="cart-top" id="cart-jump" aria-label="Ver carrito"><svg class="cart-icon" viewBox="0 0 28 28" aria-hidden="true"><path d="M3 5h3l2.5 13.2a2 2 0 0 0 2 1.6h10.8a2 2 0 0 0 1.9-1.4L26 9H7"/><circle cx="12" cy="24" r="1.6"/><circle cx="21" cy="24" r="1.6"/></svg><span class="cart-button-label">CARRITO</span><b id="cart-count">0</b></button></header>
+      <header class="topbar"><span class="topbar-spacer" aria-hidden="true"></span><a class="wordmark" href="#top">POP <span>LAND</span></a><button class="cart-top" id="cart-jump" aria-label="Ver carrito"><svg class="cart-icon" viewBox="0 0 28 28" aria-hidden="true"><path d="M3 5h3l2.5 13.2a2 2 0 0 0 2 1.6h10.8a2 2 0 0 0 1.9-1.4L26 9H7"/><circle cx="12" cy="24" r="1.6"/><circle cx="21" cy="24" r="1.6"/></svg><span class="cart-button-label">CARRITO</span><b id="cart-count">0</b></button></header>
       <main id="top">
         <section class="hero">
           <div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> POP! POP! POP! — HECHO PARA COMPARTIR</div><h1>ELIGE TU<br/><em>ANTOJO.</em></h1><p>Palomitas para fiestas, eventos y todos tus días. Arma tu combo y cotiza en un toque.</p><div class="hero-ctas"><a href="#menu" class="button primary">VER MENÚ <span>↘</span></a><a href="#paquetes" class="text-cta">EXPLORAR PAQUETES <span>↗</span></a></div></div>
@@ -58,8 +58,11 @@ const sizes = ['CH','MD','G','XL'];
         </section>
         <div class="content-grid">
           <section class="catalog" id="menu">
-            <div class="section-head"><div><div class="eyebrow red">[ SELECT YOUR FLAVOR ]</div><h2>MENÚ <span>POP!</span></h2></div><div class="size-legend"><small>TAMAÑO</small><span>CH</span><span>MD</span><span>G</span><span>XL</span></div></div>
-            <div class="filter-row"><button class="filter active" data-filter="ALL">◈ TODO <small>24</small></button><button class="filter" data-filter="SALADAS">◉ SALADAS <small>12</small></button><button class="filter" data-filter="DULCES">✿ DULCES <small>12</small></button><div class="sort-label">ORDEN: <b>FAVORITOS ↓</b></div></div>
+            <div class="section-head"><div><div class="eyebrow red">[ SELECT YOUR FLAVOR ]</div><h2>MENÚ <span>POP!</span></h2></div><div class="size-legend" role="group" aria-label="Tamaño general y gramaje aproximado; saladas y dulces">
+              <div class="size-legend-caption"><b>TAMAÑO GENERAL</b><small>GRAMAJE APROXIMADO<br/>SALADAS / DULCES</small></div>
+              <div class="size-legend-buttons">{sizes.map((size,i)=><button class={`global-size ${i===0 ? 'active' : ''}`} type="button" data-global-size={i} aria-label={`${size}: saladas ${approximateWeights[i][0]}, dulces ${approximateWeights[i][1]}`} aria-pressed={i===0 ? 'true' : 'false'}><b>{size}</b><small>{approximateWeights[i][0]} / {approximateWeights[i][1]}</small></button>)}</div>
+            </div></div>
+            <div class="filter-row"><button class="filter active" data-filter="ALL">◈ TODO <small>21</small></button><button class="filter" data-filter="SALADAS">◉ SALADAS <small>9</small></button><button class="filter" data-filter="DULCES">✿ DULCES <small>12</small></button><div class="sort-label">ORDEN: <b>FAVORITOS ↓</b></div></div>
             <div class="flavor-grid" id="flavor-grid">
               {all.map((item, index) => <article class="flavor-card" data-kind={item.type} data-name={item.name.toLowerCase()}>
                 <div class={`card-art art-${index % 6}`}><span class="card-code">PX-{String(index+1).padStart(2,'0')}</span><span class="card-emoji">{item.emoji}</span><span class="card-spark">✳</span><button class="quick-add" aria-label={`Agregar ${item.name}`} data-add={item.id}><svg class="plus-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
@@ -72,19 +75,30 @@ const sizes = ['CH','MD','G','XL'];
               <article class="package-card"><div class="package-visual pack-yellow">🍿<span>× 6</span></div><div class="package-data"><span class="package-kicker">01 / MINI PARTY</span><h3>Combo Reunión</h3><p>6 bolsas medianas · sabores a elegir</p><b>$180 <small>MXN</small></b></div><button class="add-package" data-pack="Combo Reunión" data-cost="180">AGREGAR +</button></article>
               <article class="package-card featured"><div class="package-visual pack-red">🍿<span>× 12</span></div><div class="package-data"><span class="package-kicker">02 / FULL PARTY</span><h3>Combo Fiesta</h3><p>12 bolsas medianas · sabores a elegir</p><b>$340 <small>MXN</small></b></div><button class="add-package" data-pack="Combo Fiesta" data-cost="340">AGREGAR +</button></article>
             </div><p class="package-note">Combos de muestra editables · pregunta por opciones para eventos y distribución.</p></section>
-            <footer><span>PALOMITASX © 2026</span><span>MAÍZ + ACTITUD <b>✳</b></span><span>HECHO PARA HACER POP!</span></footer>
+            <footer><span>POP LAND © 2026</span><span>MAÍZ + ACTITUD <b>✳</b></span><span>HECHO PARA HACER POP!</span></footer>
           </section>
           <aside class="cart-panel" id="cart-panel"><div class="cart-heading"><div class="cart-heading-icon" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M3 5h3l2.5 13.2a2 2 0 0 0 2 1.6h10.8a2 2 0 0 0 1.9-1.4L26 9H7"/><circle cx="12" cy="24" r="1.6"/><circle cx="21" cy="24" r="1.6"/></svg></div><h2>MI CARRITO</h2></div><div class="cart-items" id="cart-items"><div class="empty-cart"><div class="empty-icon">▱</div><b>Tu carrito está vacío</b><small>Elige un sabor para empezar tu misión.</small></div></div><div class="insumo-callout"><span>✳</span><div><b>¿NECESITAS INSUMOS?</b><small>Maíz, aceite, saborizantes y más.</small></div><button id="insumos-wa" aria-label="Cotizar insumos por WhatsApp"><svg class="whatsapp-mini" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.4 29l6.8-1.8A12.8 12.8 0 1 0 16 3.2Zm0 23.1c-1.9 0-3.8-.5-5.4-1.6l-4.4.9 1.2-4.1A10.2 10.2 0 1 1 16 26.3Z"/><path d="M21.6 18.7c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.3 8.3 0 0 1-2.5-1.5 9.1 9.1 0 0 1-1.7-2.1c-.2-.3 0-.5.2-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4c.2.2 2.4 3.7 5.9 5.1 2.9 1.1 3.5.9 4.1.8.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4s-.3-.2-.6-.4Z"/></svg></button></div><div class="cart-total"><span>TOTAL ESTIMADO</span><b id="cart-total">$0 <small>MXN</small></b></div><button class="whatsapp-button" id="checkout"><svg class="whatsapp-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.4 29l6.8-1.8A12.8 12.8 0 1 0 16 3.2Zm0 23.1c-1.9 0-3.8-.5-5.4-1.6l-.4-.2-4 1 1.1-3.9-.3-.4a10.2 10.2 0 1 1 9 5.1Zm5.6-7.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.3 8.3 0 0 1-2.5-1.5 9.1 9.1 0 0 1-1.7-2.1c-.2-.3 0-.5.2-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4c.2.2 2.4 3.7 5.9 5.1 2.9 1.1 3.5.9 4.1.8.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4s-.3-.2-.6-.4Z"/></svg><span>COTIZAR POR WHATSAPP</span></button><div class="cart-note">PRECIOS DE REFERENCIA · CONFIRMA DISPONIBILIDAD</div><button class="cart-mini" id="event-order-open" type="button" aria-haspopup="dialog" aria-controls="event-order-dialog"><span aria-hidden="true">🎉</span><b>PEDIDOS PARA EVENTOS ESPECIALES</b><i aria-hidden="true">✦</i></button></aside>
         </div>
         <section class="roulette-section" id="ruleta" aria-labelledby="roulette-title">
           <div class="roulette-intro"><span class="eyebrow">[ UN GIRO · UNA OPORTUNIDAD ]</span><h2 id="roulette-title">RULETA <span>POP!</span></h2><p>Gira una sola vez en este navegador. El premio es aleatorio; probabilidad de ganar: <b>0.1% (1 de cada 1,000 giros)</b>.</p></div>
           <form class="roulette-registration" id="roulette-registration">
-            <label for="roulette-name">Primero regístrate por WhatsApp</label>
-            <div class="registration-row"><input id="roulette-name" name="name" autocomplete="name" maxlength="60" placeholder="Escribe tu nombre" required /><button type="button" class="register-button" id="register-wa">REGISTRARME POR WHATSAPP</button></div>
-            <label class="confirm-row"><input id="confirm-registration" type="checkbox" disabled /><span>Ya envié mi mensaje de registro y acepto usar mi único intento.</span></label>
+            <label for="roulette-name">Escribe tu nombre para participar</label>
+            <div class="registration-row"><input id="roulette-name" name="name" autocomplete="name" maxlength="60" placeholder="Tu nombre" required /><button type="submit" class="register-button" id="spin-button">ACEPTAR Y GIRAR ↻</button></div>
+            <p class="roulette-form-note">Al aceptar, comenzarás tu único intento en este dispositivo.</p>
           </form>
-          <div class="roulette-game"><div class="wheel-wrap"><span class="wheel-pointer" aria-hidden="true">▼</span><div class="roulette-wheel" id="roulette-wheel"><div class="wheel-label label-1">¡POP!</div><div class="wheel-label label-2">CASI</div><div class="wheel-label label-3">YUM</div><div class="wheel-label label-4">SUERTE</div><div class="wheel-label label-5">MANTEQUILLA XL</div><div class="wheel-center">🍿</div></div></div><div class="roulette-controls"><span class="roulette-kicker">5 RESULTADOS · 1 INTENTO POR DISPOSITIVO</span><ul><li>¡Pop!</li><li>Casi, casi</li><li>Palomita feliz</li><li>Otra ronda... algún día</li><li class="prize-option">🎁 Palomitas grandes de mantequilla</li></ul><button class="spin-button" id="spin-button" disabled>GIRAR RULETA <span>↻</span></button><p class="spin-status" id="spin-status" role="status" aria-live="polite">Regístrate por WhatsApp y confirma el envío para habilitar tu giro.</p><button class="share-prize" id="share-prize" hidden>ENVIAR MI PREMIO POR WHATSAPP</button></div></div>
+          <div class="roulette-game"><div class="wheel-wrap"><span class="wheel-pointer" aria-hidden="true">▼</span><div class="roulette-wheel" id="roulette-wheel"><div class="wheel-label label-1">¡POP!</div><div class="wheel-label label-2">CASI</div><div class="wheel-label label-3">YUM</div><div class="wheel-label label-4">SUERTE</div><div class="wheel-label label-5">MANTEQUILLA XL</div><div class="wheel-center">🍿</div></div></div><div class="roulette-controls"><span class="roulette-kicker">5 RESULTADOS · 1 INTENTO POR DISPOSITIVO</span><ul><li>¡Pop!</li><li>Casi, casi</li><li>Palomita feliz</li><li>Otra ronda... algún día</li><li class="prize-option">🎁 Palomitas grandes de mantequilla</li></ul><p class="spin-status" id="spin-status" role="status" aria-live="polite">Escribe tu nombre y acepta para comenzar.</p></div></div>
         </section>
+        <dialog class="roulette-result-dialog" id="roulette-result-dialog" aria-labelledby="roulette-result-title">
+          <div class="roulette-result-card">
+            <span class="result-confetti" aria-hidden="true">✦</span>
+            <span class="roulette-result-kicker">RESULTADO OFICIAL · PALOMITASX</span>
+            <div class="roulette-result-icon" id="roulette-result-icon" aria-hidden="true">🍿</div>
+            <h2 id="roulette-result-title">¡Resultado!</h2>
+            <p id="roulette-result-copy"></p>
+            <p class="roulette-result-countdown" id="roulette-result-countdown">WhatsApp se abrirá en 5 segundos…</p>
+            <button class="share-prize" id="share-prize" hidden>ENVIAR MI PREMIO POR WHATSAPP</button>
+          </div>
+        </dialog>
 
         <section class="faq-section" id="preguntas-frecuentes" aria-labelledby="faq-title">
           <div class="faq-heading"><span class="eyebrow red">[ PREGUNTAS POPULARES ]</span><h2 id="faq-title">FAQ <span>POP!</span></h2><p>Lo esencial para que tu evento tenga su dosis de palomitas.</p></div>
@@ -161,37 +175,58 @@ const sizes = ['CH','MD','G','XL'];
     function renderCart(){const host=document.getElementById('cart-items'); let entries=[...cart.values()]; document.getElementById('cart-count').textContent=entries.reduce((s,x)=>s+x.qty,0); if(!entries.length){host.innerHTML='<div class="empty-cart"><div class="empty-icon">▱</div><b>Tu carrito está vacío</b><small>Elige un sabor para empezar tu misión.</small></div>';}else{host.innerHTML=entries.map((x,i)=>`<div class="cart-item"><span class="item-emoji">${x.emoji||'🍿'}</span><div class="item-copy"><b>${x.name}</b><small>${x.detail}</small><div class="qty-controls"><button data-qty="${i}" data-delta="-1">−</button><span>${x.qty}</span><button data-qty="${i}" data-delta="1">+</button></div></div><strong>${money(x.price*x.qty)}</strong></div>`).join('');}document.getElementById('cart-total').innerHTML=money(entries.reduce((s,x)=>s+x.price*x.qty,0))+' <small>MXN</small>';}
     let toastTimer; function toast(label=''){const el=document.getElementById('toast');el.textContent=label?`¡${label} agregado al carrito! ✨`:'¡Agregado al carrito! ✨';el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
     document.querySelectorAll('.flavor-card').forEach(card=>{const id=card.querySelector('[data-add]').dataset.add;const p=products.find(x=>x.id===id);card.querySelector('.size-select select').dataset.prices=p.prices.join('|');card.querySelector('.size-select select').addEventListener('change',e=>{card.querySelector('.price-line b').textContent=money(p.prices[e.target.value]);});card.querySelector('[data-add]').addEventListener('click',()=>{const size=card.querySelector('select').value;const key=id+'-'+size;const existing=cart.get(key);cart.set(key,{key,name:p.name,detail:['CH','MD','G','XL'][size]+' · '+p.type,price:p.prices[size],qty:(existing?.qty||0)+1,emoji:card.querySelector('.card-emoji').textContent});renderCart();card.querySelector('[data-add]').classList.remove('is-added');void card.querySelector('[data-add]').offsetWidth;card.querySelector('[data-add]').classList.add('is-added');setTimeout(()=>card.querySelector('[data-add]').classList.remove('is-added'),420);toast(p.name);});});
+    const globalSizeButtons=[...document.querySelectorAll('[data-global-size]')];
+    globalSizeButtons.forEach(button=>button.addEventListener('click',()=>{
+      const size=button.dataset.globalSize;
+      document.querySelectorAll('.flavor-card').forEach(card=>{
+        const select=card.querySelector('[data-size]');
+        select.value=size;
+        select.dispatchEvent(new Event('change',{bubbles:true}));
+      });
+      globalSizeButtons.forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+    }));
     document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.flavor-card').forEach(card=>card.classList.toggle('hidden',btn.dataset.filter!=='ALL'&&card.dataset.kind!==btn.dataset.filter));}));
     document.querySelectorAll('.add-package').forEach(btn=>btn.addEventListener('click',()=>{const key='pack-'+btn.dataset.pack;const old=cart.get(key);cart.set(key,{key,name:btn.dataset.pack,detail:'Paquete · sabores a elegir',price:Number(btn.dataset.cost),qty:(old?.qty||0)+1,emoji:'🍿'});renderCart();toast(btn.dataset.pack); }));
     document.getElementById('cart-items').addEventListener('click',e=>{const b=e.target.closest('[data-qty]');if(!b)return;const entries=[...cart.values()],item=entries[Number(b.dataset.qty)];item.qty+=Number(b.dataset.delta);if(item.qty<=0)cart.delete(item.key);renderCart();});
     function sendWhatsApp(insumos=false){const entries=[...cart.values()];let message=insumos?'Hola, quiero cotizar insumos para palomitas (maíz, aceite, saborizantes y bolsas).':entries.length?'Hola, quiero cotizar este pedido de PALOMITASX:\n'+entries.map(x=>`• ${x.qty} × ${x.name} (${x.detail}) — ${money(x.price*x.qty)}`).join('\n')+`\n\nTotal estimado: ${money(entries.reduce((s,x)=>s+x.price*x.qty,0))} MXN\n¿Me ayudan a confirmar disponibilidad y precio final?`:'Hola, quiero cotizar palomitas para un evento. ¿Me comparten opciones de sabores y paquetes?';window.open(waUrl(message),'_blank','noopener');}
     const rouletteKey='palomitasx-roulette-used-v1';
-    const registrationKey='palomitasx-roulette-registered-v1';
+    const rouletteForm=document.getElementById('roulette-registration');
     const spinButton=document.getElementById('spin-button');
     const rouletteWheel=document.getElementById('roulette-wheel');
     const spinStatus=document.getElementById('spin-status');
     const nameInput=document.getElementById('roulette-name');
-    const registerButton=document.getElementById('register-wa');
-    const confirmRegistration=document.getElementById('confirm-registration');
     const sharePrizeButton=document.getElementById('share-prize');
+    const resultDialog=document.getElementById('roulette-result-dialog');
+    const resultTitle=document.getElementById('roulette-result-title');
+    const resultCopy=document.getElementById('roulette-result-copy');
+    const resultIcon=document.getElementById('roulette-result-icon');
+    const resultCountdown=document.getElementById('roulette-result-countdown');
     let rouletteUsed=localStorage.getItem(rouletteKey)==='1';
-    let registered=localStorage.getItem(registrationKey)==='1';
-    if(registered){confirmRegistration.checked=true;spinButton.disabled=rouletteUsed;}
-    if(rouletteUsed){nameInput.disabled=true;registerButton.disabled=true;confirmRegistration.disabled=true;spinButton.disabled=true;spinButton.textContent='INTENTO UTILIZADO';spinStatus.textContent='Ya usaste tu giro en este navegador/dispositivo.';}
-    registerButton.addEventListener('click',()=>{const name=nameInput.value.trim();if(name.length<2){nameInput.focus();spinStatus.textContent='Escribe tu nombre para preparar el registro.';return;}window.open(waUrl(`Hola, soy ${name}. Quiero registrarme para participar en la ruleta de PALOMITASX. Confirmo que tengo un único intento.`),'_blank','noopener');confirmRegistration.disabled=false;spinStatus.textContent='Envía el mensaje en WhatsApp y luego marca la casilla de confirmación.';});
-    confirmRegistration.addEventListener('change',()=>{registered=confirmRegistration.checked;localStorage.setItem(registrationKey,registered?'1':'0');spinButton.disabled=!registered||rouletteUsed;});
-    spinButton.addEventListener('click',()=>{
-      if(rouletteUsed||!registered||!confirmRegistration.checked)return;
-      const name=nameInput.value.trim();if(name.length<2){spinStatus.textContent='Escribe tu nombre para continuar.';return;}
-      rouletteUsed=true;localStorage.setItem(rouletteKey,'1');spinButton.disabled=true;nameInput.disabled=true;registerButton.disabled=true;confirmRegistration.disabled=true;spinStatus.textContent='Abriendo WhatsApp y girando...';
-      window.open(waUrl(`Hola, soy ${name}. Estoy usando mi único intento (#1) en la ruleta de PALOMITASX.`),'_blank','noopener');
+    if(rouletteUsed){nameInput.disabled=true;spinButton.disabled=true;spinButton.textContent='INTENTO UTILIZADO';spinStatus.textContent='Ya usaste tu giro en este navegador/dispositivo.';}
+    rouletteForm.addEventListener('submit',e=>{
+      e.preventDefault();
+      if(rouletteUsed)return;
+      const name=nameInput.value.trim();
+      if(name.length<2){nameInput.focus();spinStatus.textContent='Escribe tu nombre para participar.';return;}
+      rouletteUsed=true;localStorage.setItem(rouletteKey,'1');spinButton.disabled=true;nameInput.disabled=true;spinStatus.textContent='¡La ruleta está girando!';
       const won=Math.random()<0.001;
       const outcome=won?4:Math.floor(Math.random()*4);
       const stop=(360*6)+((360-(outcome*72))%360);
       rouletteWheel.style.transform=`rotate(${stop}deg)`;
       setTimeout(()=>{
-        if(won){spinStatus.textContent='¡PREMIO! Ganaste palomitas grandes de mantequilla. Ya están en tu carrito.';const key='roulette-butter-prize';cart.set(key,{key,name:'Premio: palomitas grandes de mantequilla',detail:'Premio de ruleta · tamaño grande',price:0,qty:1,emoji:'🍿'});renderCart();toast('¡Premio de mantequilla!');sharePrizeButton.hidden=false;}
-        else{const outcomes=['¡Pop!','Casi, casi','Palomita feliz','Otra ronda... algún día'];spinStatus.textContent=`Resultado: ${outcomes[outcome]}. Gracias por jugar.`;}
+        const outcomes=['¡POP!','CASI, CASI','PALOMITA FELIZ','OTRA RONDA... ALGÚN DÍA'];
+        const label=won?'¡GANASTE PALOMITAS GRANDES DE MANTEQUILLA!':outcomes[outcome];
+        resultTitle.textContent=won?'¡FELICIDADES!':label;
+        resultCopy.textContent=won?`${name}, ganaste palomitas grandes de mantequilla. ¡Tu suerte hizo POP!`:`${name}, tu resultado es: ${label}. ¡Gracias por jugar!`;
+        resultIcon.textContent=won?'🎉':'🍿';
+        sharePrizeButton.hidden=!won;
+        if(won){const key='roulette-butter-prize';cart.set(key,{key,name:'Premio: palomitas grandes de mantequilla',detail:'Premio de ruleta · tamaño grande',price:0,qty:1,emoji:'🍿'});renderCart();toast('¡Premio de mantequilla!');}
+        spinStatus.textContent=`Resultado: ${label}`;
+        resultDialog.showModal();
+        let remaining=5;resultCountdown.textContent=`WhatsApp se abrirá en ${remaining} segundos…`;
+        const countdown=setInterval(()=>{remaining--;if(remaining>0)resultCountdown.textContent=`WhatsApp se abrirá en ${remaining} segundos…`;else clearInterval(countdown);},1000);
+        const confirmation=`🍿 Hola, soy ${name}. Ya participé en mi único intento de la ruleta PALOMITASX. Resultado: ${label}${won?' Gané palomitas grandes de mantequilla.':''}`;
+        setTimeout(()=>window.location.assign(waUrl(confirmation)),5000);
       },5300);
     });
     async function makePrizeImage(){return await new Promise(resolve=>{const canvas=document.createElement('canvas');canvas.width=720;canvas.height=720;const c=canvas.getContext('2d');c.fillStyle='#fff6e5';c.fillRect(0,0,720,720);c.fillStyle='#211916';c.beginPath();c.arc(360,345,270,0,Math.PI*2);c.fill();const colors=['#ed4938','#ffd34f','#a9d45b','#88c7d9','#f3a2bd'];for(let i=0;i<5;i++){const a=-Math.PI/2+i*Math.PI*2/5,b=a+Math.PI*2/5;c.beginPath();c.moveTo(360,345);c.arc(360,345,242,a,b);c.closePath();c.fillStyle=colors[i];c.fill();c.strokeStyle='#211916';c.lineWidth=5;c.stroke();c.save();c.translate(360,345);c.rotate(a+Math.PI/5);c.fillStyle='#211916';c.font='bold 20px sans-serif';c.textAlign='center';c.fillText(i===4?'MANTEQUILLA XL':['¡POP!','CASI','YUM','SUERTE'][i],0,-173);c.restore();}c.fillStyle='#fffdf8';c.beginPath();c.arc(360,345,58,0,Math.PI*2);c.fill();c.strokeStyle='#211916';c.lineWidth=6;c.stroke();c.font='50px serif';c.textAlign='center';c.fillText('🍿',360,362);c.fillStyle='#211916';c.fillRect(72,626,576,2);c.fillStyle='#ed4938';c.font='bold 30px sans-serif';c.fillText('¡GANASTE PALOMITAS GRANDES!',360,674);canvas.toBlob(resolve,'image/png');});}

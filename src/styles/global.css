@@ -464,7 +464,7 @@ footer b { color: var(--red); }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -7px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (max-width: 620px) {
   .size-select { min-width: 86px; height: 34px; padding: 0 6px; gap: 4px; }
-  .size-select select { min-width: 34px; font-size: 12px; }
+  .size-select select { min-width: 36px; font-size: 11px; }
   .size-label { font-size: 7px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -866,3 +866,77 @@ footer b { color: var(--red); }
   .hero::after { background-position: 58% center; opacity: .15; }
 }
 @media (prefers-reduced-motion: reduce) { .faq-item, .faq-item summary span, .faq-contact { transition: none; } .faq-item p { animation: none; } }
+
+
+/* Selector global de tamaño, consistente con el selector de referencia */
+.size-legend { gap: 7px; }
+.size-legend small { margin-right: 4px; text-align: right; line-height: 1.2; }
+.global-size {
+  min-width: 38px; height: 38px; padding: 0 9px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--cream); color: var(--ink); font: 12px 'Space Mono'; cursor: pointer;
+  transition: background .16s, border-color .16s, color .16s, transform .16s, box-shadow .16s;
+}
+.global-size:hover { transform: translateY(-2px); border-color: var(--red); }
+.global-size.active { border-color: var(--ink); background: var(--yellow); color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.global-size:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+@media (max-width: 620px) {
+  .size-legend { gap: 5px; }
+  .global-size { min-width: 34px; height: 36px; padding: 0 7px; font-size: 11px; }
+  .size-legend small { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .global-size { transition: none; } }
+
+/* Pesos aproximados específicos por tipo de palomita en el selector global */
+.size-legend { align-items: flex-end; gap: 8px; }
+.size-legend-caption { display: grid; gap: 4px; padding-bottom: 3px; text-align: right; }
+.size-legend-caption b { color: var(--ink); font: 700 9px 'Space Mono'; white-space: nowrap; }
+.size-legend-caption small { margin: 0; color: #786b5f; font: 7px/1.35 'Space Mono'; white-space: nowrap; }
+.size-legend-buttons { display: flex; align-items: stretch; gap: 5px; }
+.global-size { min-width: 62px; height: 48px; padding: 4px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.global-size b { font: 700 11px 'Space Mono'; }
+.global-size small { color: #74675b; font: 7px/1 'DM Sans'; white-space: nowrap; }
+.global-size.active small { color: #514000; }
+@media (max-width: 900px) {
+  .size-legend { flex-wrap: wrap; justify-content: flex-end; }
+  .size-legend-caption { width: 100%; }
+}
+@media (max-width: 620px) {
+  .size-legend { width: 100%; justify-content: space-between; gap: 7px; }
+  .size-legend-caption { width: auto; text-align: left; }
+  .size-legend-buttons { flex: 1; justify-content: flex-end; gap: 4px; }
+  .global-size { flex: 1; min-width: 0; height: 46px; padding: 3px 2px; }
+  .global-size small { font-size: 6px; }
+}
+
+
+/* Evita que el precio y el selector de tamaño se encimen en cards estrechas */
+.card-bottom { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,auto); align-items: center; gap: 6px; }
+.price-line { min-width: 0; gap: 3px; flex-wrap: wrap; }
+.price-line span { flex: 0 0 100%; font-size: 7px; line-height: 1; }
+.price-line b { max-width: 100%; font-size: clamp(19px, 2.1vw, 24px); line-height: 1; white-space: nowrap; }
+.size-select { min-width: 0; width: clamp(82px, 8vw, 108px); justify-content: space-between; gap: 3px; padding-inline: 6px; }
+.size-select select { min-width: 0; width: 40px; flex: 0 1 40px; font-size: 10px; }
+@media (max-width: 450px) {
+  .card-bottom { grid-template-columns: minmax(0,1fr) minmax(78px,auto); gap: 4px; }
+  .price-line b { font-size: clamp(17px, 6vw, 21px); }
+  .size-select { width: 86px; padding-inline: 4px; }
+  .size-label { font-size: 7px; }
+}
+
+/* Resultado de ruleta a pantalla completa */
+.roulette-registration { display: grid; gap: 8px; }
+.roulette-form-note { margin: 0; color: #685c50; font-size: 11px; }
+.roulette-registration .register-button { min-width: 160px; box-shadow: 2px 2px 0 #155d35; transition: transform .16s, box-shadow .16s; }
+.roulette-registration .register-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 2px 4px 0 #155d35; }
+.roulette-result-dialog { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 18px; border: 0; place-items: center; overflow: auto; background: radial-gradient(circle at 50% 42%,#582d19,#211916 58%,#100d0b); color: var(--ink); }
+.roulette-result-dialog[open] { display: grid; }
+.roulette-result-dialog::backdrop { background: #140d0bed; backdrop-filter: blur(7px); }
+.roulette-result-card { position: relative; width: min(100%,560px); margin: auto; padding: clamp(28px,5vw,48px); border: 4px solid var(--ink); border-radius: 22px; background: var(--paper); text-align: center; box-shadow: 8px 8px 0 var(--red),0 0 0 7px var(--yellow); animation: eventCardIn .35s cubic-bezier(.2,.9,.25,1.2) both; }
+.roulette-result-kicker { display: inline-block; padding: 7px 10px; background: var(--ink); color: var(--yellow); font: 700 9px 'Space Mono'; letter-spacing: .8px; }
+.roulette-result-icon { width: 96px; height: 96px; margin: 20px auto 12px; display: grid; place-items: center; border: 3px solid var(--ink); border-radius: 50%; background: var(--yellow); box-shadow: 4px 4px 0 var(--red); font-size: 54px; animation: welcomePop 1.4s ease-in-out infinite; }
+.roulette-result-card h2 { margin: 12px 0; color: var(--red); font: clamp(34px,7vw,54px)/.98 'Lilita One'; }
+.roulette-result-card p { color: #51473e; font-size: 16px; font-weight: 700; line-height: 1.45; }
+.roulette-result-countdown { margin-top: 22px; padding: 12px; border-radius: 8px; background: #211916; color: var(--yellow) !important; font: 700 11px 'Space Mono'; }
+.roulette-result-card .share-prize:not([hidden]) { margin-top: 5px; }
+@media (max-width: 620px) { .registration-row { flex-direction: column; } .roulette-registration .register-button { width: 100%; } .roulette-result-card { padding: 26px 18px; } .roulette-result-card p { font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .roulette-result-card, .roulette-result-icon { animation: none; } .roulette-registration .register-button { transition: none; } }
