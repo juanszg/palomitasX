@@ -940,3 +940,19 @@ footer b { color: var(--red); }
 .roulette-result-card .share-prize:not([hidden]) { margin-top: 5px; }
 @media (max-width: 620px) { .registration-row { flex-direction: column; } .roulette-registration .register-button { width: 100%; } .roulette-result-card { padding: 26px 18px; } .roulette-result-card p { font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { .roulette-result-card, .roulette-result-icon { animation: none; } .roulette-registration .register-button { transition: none; } }
+
+.hero-image-trigger { position: relative; display: block; width: min(100%,390px); margin: 15px 0 14px; padding: 0; overflow: hidden; border: 2px solid #ffd34f; border-radius: 12px; background: #140c1f; box-shadow: 4px 4px 0 #ed4938; cursor: zoom-in; }
+.hero-image-trigger img { display: block; width: 100%; height: clamp(88px,12vw,132px); object-fit: cover; transition: transform .25s ease, filter .25s ease; }
+.hero-image-trigger:hover img { transform: scale(1.045); filter: saturate(1.1); }
+.hero-image-trigger span { position: absolute; right: 8px; bottom: 7px; padding: 5px 8px; border-radius: 5px; background: #211916df; color: #fff6e5; font: 700 8px 'Space Mono'; }
+.hero-image-trigger span b { color: #ffd34f; font-size: 13px; }
+.hero-image-dialog { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 58px 16px 16px; border: 0; background: #100d0bf2; color: white; }
+.hero-image-dialog[open] { display: grid; grid-template-rows: 1fr; }
+.hero-image-dialog::backdrop { background: #100d0bf2; backdrop-filter: blur(8px); }
+.hero-image-close { position: absolute; z-index: 2; top: 14px; right: 18px; width: 42px; height: 42px; border: 2px solid #fff6e5; border-radius: 50%; background: #ed4938; color: white; font-size: 29px; cursor: pointer; }
+.hero-image-tools { position: absolute; z-index: 2; top: 15px; left: 18px; display: flex; gap: 7px; }
+.hero-image-tools button { min-width: 40px; height: 38px; padding: 0 10px; border: 2px solid #ffd34f; border-radius: 8px; background: #211916; color: white; font: 700 14px 'Space Mono'; cursor: pointer; }
+.hero-image-tools button:hover { background: #ed4938; }
+.hero-image-stage { width: 100%; height: 100%; overflow: auto; display: grid; place-items: center; }
+.hero-image-stage img { max-width: min(100%,1400px); max-height: 100%; object-fit: contain; transition: transform .2s ease; }
+@media (prefers-reduced-motion: reduce) { .hero-image-trigger img, .hero-image-stage img { transition: none; } }
