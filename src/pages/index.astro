@@ -68,7 +68,6 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
                 <div class={`card-art art-${index % 6}`}><span class="card-code">PX-{String(index+1).padStart(2,'0')}</span><span class="card-emoji">{item.emoji}</span><span class="card-spark">✳</span><button class="quick-add" aria-label={`Agregar ${item.name}`} data-add={item.id}><svg class="plus-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
                 <div class="card-info"><div><small>{item.tag}</small><h3>{item.name}</h3></div></div>
                 <div class="card-bottom"><div class="price-line"><span>DESDE</span><b>${item.prices[0]}</b></div><label class="size-select"><span class="sr-only">Tamaño de porción</span><span class="size-label">TAM.</span><select data-size={item.id}>{sizes.map((s,i)=><option value={i}>{s}</option>)}</select><svg class="size-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4"/></svg></label></div>
-                <span class="peso-note">MXN · precio por tamaño</span>
               </article>)}
             </div>
             <section class="packages" id="paquetes"><div class="packages-title"><div><div class="eyebrow">[ PARTY MODE ]</div><h2>PAQUETES <span>PARA COMPARTIR</span></h2></div><span class="pack-count">02 COMBOS DISPONIBLES</span></div><div class="package-grid">
@@ -117,15 +116,14 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
     <div class="toast" id="toast" role="status" aria-live="polite">¡AGREGADO AL CARRITO! ✨</div>
 
     <dialog class="welcome-dialog" id="welcome-dialog" aria-labelledby="welcome-title" aria-describedby="welcome-copy">
+      <div class="welcome-particles" id="welcome-particles" aria-hidden="true"></div>
       <div class="welcome-burst burst-one" aria-hidden="true">✦</div><div class="welcome-burst burst-two" aria-hidden="true">✳</div>
       <div class="welcome-card">
-        <button class="welcome-close" id="welcome-close" type="button" aria-label="Cerrar aviso">×</button>
-        <span class="welcome-stamp">POP VADERS · AVISO IMPORTANTE</span>
-        <div class="welcome-popcorn" aria-hidden="true">🍿</div>
+        <div class="welcome-popcorn"><img src="/popvaders-logo.png" alt="Logo de POP VADERS" /></div>
         <span class="welcome-eyebrow">¡QUE NO TE AGARRE LA HORA!</span>
-        <h2 id="welcome-title">Pide con<br/><em>anticipación</em></h2>
+        <h2 id="welcome-title">POP VADERS!<br/><em>INFORMA</em></h2>
         <p id="welcome-copy">Recuerda hacer tu pedido mínimo 24hrs antes 😉 🍿</p>
-        <button class="welcome-continue" id="welcome-continue" type="button">¡VA, QUIERO VER EL MENÚ! <span>↘</span></button>
+        <button class="welcome-continue" id="welcome-continue" type="button">¡VA, QUIERO VER EL MENÚ!</button>
         <small>FIESTA LISTA · PALOMITAS TAMBIÉN</small>
       </div>
     </dialog>
@@ -165,6 +163,7 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
       </div>
     </dialog>
   </div>
+  <script is:inline src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script type="application/json" id="product-data" set:html={JSON.stringify(all.map(x=>({id:x.id,name:x.name,type:x.type,prices:x.prices.map(Number)})))}></script>
   <script is:inline>
     const cart = new Map();
@@ -172,9 +171,12 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
     const waUrl = message => `https://wa.me/${waNumber}?text=${encodeURIComponent(message.includes('🍿') ? message : `🍿 ${message}`)}`;
     const welcomeDialog=document.getElementById('welcome-dialog');
     welcomeDialog.showModal();
-    document.getElementById('welcome-close').addEventListener('click',()=>welcomeDialog.close());
-    document.getElementById('welcome-continue').addEventListener('click',()=>welcomeDialog.close());
-    welcomeDialog.addEventListener('click',e=>{if(e.target===welcomeDialog)welcomeDialog.close();});
+    if(window.particlesJS){window.particlesJS('welcome-particles',{particles:{number:{value:88,density:{enable:true,value_area:850}},color:{value:['#ffffff','#67e6ff','#ffe34d','#ff6383']},shape:{type:'circle'},opacity:{value:.72,random:true,anim:{enable:true,speed:.7,opacity_min:.18,sync:false}},size:{value:2.6,random:true,anim:{enable:true,speed:2,size_min:.5,sync:false}},line_linked:{enable:true,distance:135,color:'#69dcff',opacity:.24,width:1},move:{enable:true,speed:.7,direction:'none',random:true,straight:false,out_mode:'out',bounce:false}},interactivity:{detect_on:'canvas',events:{onhover:{enable:true,mode:'repulse'},onclick:{enable:false},resize:true},modes:{repulse:{distance:75,duration:.45}}},retina_detect:true});}
+    let welcomeClosing=false;
+    const closeWelcome=()=>{if(welcomeClosing||!welcomeDialog.open)return;welcomeClosing=true;welcomeDialog.classList.add('is-closing');setTimeout(()=>{welcomeDialog.close();welcomeDialog.classList.remove('is-closing');welcomeClosing=false;},460);};
+    document.getElementById('welcome-continue').addEventListener('click',closeWelcome);
+    welcomeDialog.addEventListener('click',e=>{if(e.target===welcomeDialog)closeWelcome();});
+    welcomeDialog.addEventListener('cancel',e=>{e.preventDefault();closeWelcome();});
     const heroImageDialog=document.getElementById('hero-image-dialog');
     const heroImageLarge=document.getElementById('hero-image-large');
     let heroImageZoom=1;
@@ -187,9 +189,11 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
     heroImageLarge.addEventListener('dblclick',()=>setHeroImageZoom(heroImageZoom===1?2:1));
     const products = JSON.parse(document.getElementById('product-data').textContent);
     const money=n=>'$'+Number(n).toLocaleString('es-MX');
+    let spaceAudio;
+    function playSpaceShot(){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;spaceAudio ||= new AudioCtx();if(spaceAudio.state==='suspended')spaceAudio.resume();const now=spaceAudio.currentTime;const osc=spaceAudio.createOscillator();const gain=spaceAudio.createGain();const filter=spaceAudio.createBiquadFilter();osc.type='sawtooth';osc.frequency.setValueAtTime(880+Math.random()*280,now);osc.frequency.exponentialRampToValueAtTime(110+Math.random()*55,now+.17);filter.type='lowpass';filter.frequency.setValueAtTime(3200,now);filter.frequency.exponentialRampToValueAtTime(650,now+.18);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.12,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.2);osc.connect(filter);filter.connect(gain);gain.connect(spaceAudio.destination);osc.start(now);osc.stop(now+.21);}catch{}}
     function renderCart(){const host=document.getElementById('cart-items'); let entries=[...cart.values()]; document.getElementById('cart-count').textContent=entries.reduce((s,x)=>s+x.qty,0); if(!entries.length){host.innerHTML='<div class="empty-cart"><div class="empty-icon">▱</div><b>Tu carrito está vacío</b><small>Elige un sabor para empezar tu misión.</small></div>';}else{host.innerHTML=entries.map((x,i)=>`<div class="cart-item"><span class="item-emoji">${x.emoji||'🍿'}</span><div class="item-copy"><b>${x.name}</b><small>${x.detail}</small><div class="qty-controls"><button data-qty="${i}" data-delta="-1">−</button><span>${x.qty}</span><button data-qty="${i}" data-delta="1">+</button></div></div><strong>${money(x.price*x.qty)}</strong></div>`).join('');}document.getElementById('cart-total').innerHTML=money(entries.reduce((s,x)=>s+x.price*x.qty,0))+' <small>MXN</small>';}
     let toastTimer; function toast(label=''){const el=document.getElementById('toast');el.textContent=label?`¡${label} agregado al carrito! ✨`:'¡Agregado al carrito! ✨';el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
-    document.querySelectorAll('.flavor-card').forEach(card=>{const id=card.querySelector('[data-add]').dataset.add;const p=products.find(x=>x.id===id);card.querySelector('.size-select select').dataset.prices=p.prices.join('|');card.querySelector('.size-select select').addEventListener('change',e=>{card.querySelector('.price-line b').textContent=money(p.prices[e.target.value]);});card.querySelector('[data-add]').addEventListener('click',()=>{const size=card.querySelector('select').value;const key=id+'-'+size;const existing=cart.get(key);cart.set(key,{key,name:p.name,detail:['CH','MD','G','XL'][size]+' · '+p.type,price:p.prices[size],qty:(existing?.qty||0)+1,emoji:card.querySelector('.card-emoji').textContent});renderCart();card.querySelector('[data-add]').classList.remove('is-added');void card.querySelector('[data-add]').offsetWidth;card.querySelector('[data-add]').classList.add('is-added');setTimeout(()=>card.querySelector('[data-add]').classList.remove('is-added'),420);toast(p.name);});});
+    document.querySelectorAll('.flavor-card').forEach(card=>{const id=card.querySelector('[data-add]').dataset.add;const p=products.find(x=>x.id===id);card.querySelector('.size-select select').dataset.prices=p.prices.join('|');card.querySelector('.size-select select').addEventListener('change',e=>{card.querySelector('.price-line b').textContent=money(p.prices[e.target.value]);});card.querySelector('[data-add]').addEventListener('click',()=>{const size=card.querySelector('select').value;const key=id+'-'+size;const existing=cart.get(key);cart.set(key,{key,name:p.name,detail:['CH','MD','G','XL'][size]+' · '+p.type,price:p.prices[size],qty:(existing?.qty||0)+1,emoji:card.querySelector('.card-emoji').textContent});playSpaceShot();renderCart();card.querySelector('[data-add]').classList.remove('is-added');void card.querySelector('[data-add]').offsetWidth;card.querySelector('[data-add]').classList.add('is-added');setTimeout(()=>card.querySelector('[data-add]').classList.remove('is-added'),420);toast(p.name);});});
     const globalSizeButtons=[...document.querySelectorAll('[data-global-size]')];
     globalSizeButtons.forEach(button=>button.addEventListener('click',()=>{
       const size=button.dataset.globalSize;
@@ -201,8 +205,9 @@ const approximateWeights = [['50 g','70 g'],['100 g','150 g'],['450 g','700 g'],
       globalSizeButtons.forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
     }));
     document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.flavor-card').forEach(card=>{const filter=btn.dataset.filter;const visible=filter==='ALL'||(filter==='ESPECIALES'?card.dataset.special==='true':card.dataset.kind===filter);card.classList.toggle('hidden',!visible);});}));
-    document.querySelectorAll('.add-package').forEach(btn=>btn.addEventListener('click',()=>{const key='pack-'+btn.dataset.pack;const old=cart.get(key);cart.set(key,{key,name:btn.dataset.pack,detail:'Paquete · sabores a elegir',price:Number(btn.dataset.cost),qty:(old?.qty||0)+1,emoji:'🍿'});renderCart();toast(btn.dataset.pack); }));
-    document.getElementById('cart-items').addEventListener('click',e=>{const b=e.target.closest('[data-qty]');if(!b)return;const entries=[...cart.values()],item=entries[Number(b.dataset.qty)];item.qty+=Number(b.dataset.delta);if(item.qty<=0)cart.delete(item.key);renderCart();});
+    document.querySelectorAll('.add-package').forEach(btn=>btn.addEventListener('click',()=>{const key='pack-'+btn.dataset.pack;const old=cart.get(key);cart.set(key,{key,name:btn.dataset.pack,detail:'Paquete · sabores a elegir',price:Number(btn.dataset.cost),qty:(old?.qty||0)+1,emoji:'🍿'});playSpaceShot();renderCart();toast(btn.dataset.pack); }));
+    document.getElementById('cart-items').addEventListener('click',e=>{const b=e.target.closest('[data-qty]');if(!b)return;const entries=[...cart.values()],item=entries[Number(b.dataset.qty)];item.qty+=Number(b.dataset.delta);if(Number(b.dataset.delta)>0)playSpaceShot();if(item.qty<=0)cart.delete(item.key);renderCart();});
+    document.querySelectorAll('.faq-item').forEach(item=>item.addEventListener('toggle',()=>{if(item.open)playSpaceShot();}));
     function sendWhatsApp(insumos=false){const entries=[...cart.values()];let message=insumos?'Hola, quiero cotizar insumos para palomitas (maíz, aceite, saborizantes y bolsas).':entries.length?'Hola, quiero cotizar este pedido de POP VADERS:\n'+entries.map(x=>`• ${x.qty} × ${x.name} (${x.detail}) — ${money(x.price*x.qty)}`).join('\n')+`\n\nTotal estimado: ${money(entries.reduce((s,x)=>s+x.price*x.qty,0))} MXN\n¿Me ayudan a confirmar disponibilidad y precio final?`:'Hola, quiero cotizar palomitas para un evento. ¿Me comparten opciones de sabores y paquetes?';window.open(waUrl(message),'_blank','noopener');}
     const rouletteKey='palomitasx-roulette-used-v1';
     const rouletteForm=document.getElementById('roulette-registration');
