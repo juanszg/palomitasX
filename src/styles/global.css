@@ -715,6 +715,12 @@ footer b { color: var(--red); }
 .pi-head p { margin: 0 0 12px; color: #f1eadd; font-size: 14px; }
 .pi-hud { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 9px; font: 400 clamp(8px, 1vw, 10px)/1.5 'Press Start 2P', monospace; }
 .pi-hud b { color: var(--y); font-weight: 400; }
+.pi-power-state,.pi-shield-state { margin: -2px 0 9px; padding: 7px 9px; border-radius: 6px; text-align: center; font: 400 8px/1.5 'Press Start 2P',monospace; }
+.pi-power-state { border: 1px solid #42ff82; background: #10703c3d; color: #aaffc2; text-shadow: 0 0 8px #20ff72; }
+.pi-power-state b { color: #fff; font-weight: 400; }
+.pi-shield-state { border: 1px solid #42bfff; background: #104b823d; color: #b9eaff; text-shadow: 0 0 8px #36bfff; }
+.pi-shield-state b { color: #43bfff; font-weight: 400; }
+.pi-power-state[hidden],.pi-shield-state[hidden] { display: none; }
 .pi-l { display: inline-flex; gap: 3px; min-width: 48px; }
 .pi-l img { width: 14px; height: 12px; image-rendering: pixelated; }
 .pi-screen { display: flex; justify-content: center; position: relative; overflow: hidden; border: 4px solid var(--y); border-radius: 14px; background: var(--bg); box-shadow: 5px 5px 0 var(--r); }
